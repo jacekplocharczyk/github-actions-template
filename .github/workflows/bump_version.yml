@@ -1,4 +1,3 @@
-# Bump version.txt to the latest tag + 0.0.1
 name: Bump version.txt
 on:
   push:
