@@ -1,0 +1,27 @@
+# Bump version.txt to the latest tag + 0.0.1
+name: Bump version.txt
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+    uses: actions/setup-python@v1
+    with:
+      python-version: 3.8
+    - name: Bump version
+      run: |
+      git config --local user.email "action@github.com"
+      git config --local user.name "GitHub Action"
+      t=$(git describe --tags `git rev-list --tags --max-count=1`)
+      python .github/return_new_version.py $t > version.txt
+      git add version.txt
+      git commit -m "Version ${t}"
+  - name: Push changes
+    uses: ad-m/github-push-action@master
+    with:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
