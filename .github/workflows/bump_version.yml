@@ -23,8 +23,8 @@ jobs:
         t=$(git describe --tags `git rev-list --tags --max-count=1`)
         new_version=$(python .github/return_new_version.py $t)
         echo $new_version > version.txt
-        git add version.txt
-        git commit -m "Version ${new_version}"
+        echo $(cat version.txt)
+        git commit -am "Version ${new_version}"
       env:
         CURRENT_BRANCH: ${{ github.head_ref }}
     - name: Push changes
