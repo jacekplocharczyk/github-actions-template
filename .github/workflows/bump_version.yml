@@ -13,9 +13,20 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
+    - name: Check versions
+      run: |
+        echo Reserved for REPO_NAME=${GITHUB_REPOSITORY##*/}
+        echo GITHUB_REF=${GITHUB_REF}
+        echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
+        echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
+        echo $(ls)
+
+        cd $REPO_NAME
+        git checkout ${GITHUB_REF##*/}
+        git checkout $(echo ${GITHUB_REF#refs/heads/})
     - name: Bump version
       run: |
-        echo ${GITHUB_REF##*/}
+        echo "${GITHUB_REF##*/}"
 
         git pull ${GITHUB_REF##*/}
         git fetch -t
