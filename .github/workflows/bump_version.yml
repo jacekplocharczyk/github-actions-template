@@ -11,15 +11,13 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: ${{ github.event.pull_request.head.sha }}
+    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
     - name: Bump version
       run: |
-        echo $CURRENT_BRANCH
-        git pull $CURRENT_BRANCH
-        git fetch -t
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         t=$(git describe --tags `git rev-list --tags --max-count=1`)
