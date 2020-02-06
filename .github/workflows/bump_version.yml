@@ -13,28 +13,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
-    - name: Step that prints name of pull request's base branch
-      run: |
-        echo "Pull request's base branch is: ${BASE_BRANCH}"
-      env:
-        BASE_BRANCH: ${{ github.base_ref }}
-      if: github.event_name == 'pull_request'
-    - name: Check versions
-      run: |
-        echo Reserved for REPO_NAME=${GITHUB_REPOSITORY##*/}
-        echo GITHUB_REF=${GITHUB_REF}
-        echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
-        echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
-        echo $(ls)
-
-        cd $REPO_NAME
-        git checkout ${GITHUB_REF##*/}
-        git checkout $(echo ${GITHUB_REF#refs/heads/})
     - name: Bump version
       run: |
-        echo "${GITHUB_REF##*/}"
-
-        git pull ${GITHUB_REF##*/}
+        echo $CURRENT_BRANCH
+        git pull $CURRENT_BRANCH
         git fetch -t
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -43,6 +25,8 @@ jobs:
         echo $new_version > version.txt
         git add version.txt
         git commit -m "Version ${new_version}"
+      env:
+        CURRENT_BRANCH: ${{ github.head_ref }}
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
