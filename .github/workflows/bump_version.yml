@@ -15,7 +15,8 @@ jobs:
         python-version: 3.8
     - name: Bump version
       run: |
-        git pull
+        git pull ${GITHUB_REF##*/}
+        echo ${GITHUB_REF##*/}
         git fetch -t
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
