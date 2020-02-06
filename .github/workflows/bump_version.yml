@@ -17,6 +17,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        git pull -t
         t=$(git describe --tags `git rev-list --tags --max-count=1`)
         new_version=$(python .github/return_new_version.py $t)
         echo $new_version > version.txt
