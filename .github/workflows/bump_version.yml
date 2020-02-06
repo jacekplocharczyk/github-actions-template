@@ -25,9 +25,8 @@ jobs:
         echo $new_version > version.txt
         echo $(cat version.txt)
         git commit -am "Version ${new_version}"
-      env:
-        CURRENT_BRANCH: ${{ github.head_ref }}
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.head_ref }}
