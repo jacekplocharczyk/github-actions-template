@@ -18,9 +18,10 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         t=$(git describe --tags `git rev-list --tags --max-count=1`)
-        python .github/return_new_version.py $t > version.txt
+        new_version=$(python .github/return_new_version.py $t)
+        echo $new_version > version.txt
         git add version.txt
-        git commit -m "Version ${t}"
+        git commit -m "Version ${new_version}"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
