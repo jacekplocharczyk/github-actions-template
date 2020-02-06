@@ -18,6 +18,8 @@ jobs:
         python-version: 3.8
     - name: Bump version
       run: |
+        git branch
+        echo $(git branch)
         git pull $CURRENT_BRANCH
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
