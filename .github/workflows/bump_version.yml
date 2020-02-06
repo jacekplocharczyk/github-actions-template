@@ -24,7 +24,7 @@ jobs:
         new_version=$(python .github/return_new_version.py $t)
         echo $new_version > version.txt
         echo $(cat version.txt)
-        git commit -am "Version ${new_version}"
+        git commit --allow-empty -am "Version ${new_version}"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
