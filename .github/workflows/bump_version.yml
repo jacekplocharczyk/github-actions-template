@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.pull_request.head.sha }}
+        ref: ${{ github.head_ref }}
     - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
@@ -18,9 +18,6 @@ jobs:
         python-version: 3.8
     - name: Bump version
       run: |
-        git branch
-        echo $(git branch)
-        git pull $CURRENT_BRANCH
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         t=$(git describe --tags `git rev-list --tags --max-count=1`)
