@@ -15,12 +15,12 @@ jobs:
       python-version: 3.8
     - name: Bump version
       run: |
-      git config --local user.email "action@github.com"
-      git config --local user.name "GitHub Action"
-      t=$(git describe --tags `git rev-list --tags --max-count=1`)
-      python .github/return_new_version.py $t > version.txt
-      git add version.txt
-      git commit -m "Version ${t}"
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        t=$(git describe --tags `git rev-list --tags --max-count=1`)
+        python .github/return_new_version.py $t > version.txt
+        git add version.txt
+        git commit -m "Version ${t}"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
